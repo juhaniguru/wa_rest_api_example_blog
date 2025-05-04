@@ -7,9 +7,6 @@ class GetBlogResDto(BaseModel):
     body: str
 
 
-
-
-
 class AddBlogReqDto(BaseModel):
     name: str
     body: str
