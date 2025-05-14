@@ -61,8 +61,16 @@ async def add_comment(req_data: AddCommentReqDto, service: CommentService,
     return service.update(req_data, blog_id, comment_id)
 
 
+
+@router.get("/{blog_id}/comments/{comment_id}")
+async def get_comment(service: CommentService,
+                      blog_id: int = Path(gt=0), comment_id: int = Path(gt=0)) -> AddCommentResDto:
+    return service.get_comment(blog_id, comment_id)
+
+
+
 @router.delete("/{blog_id}/comments/{comment_id}")
-def delete_blog(service: CommentService, blog_id: int = Path(gt=0), comment_id: int = Path(gt=0)):
+def delete_comment(service: CommentService, blog_id: int = Path(gt=0), comment_id: int = Path(gt=0)):
     try:
         service.remove_by_id(comment_id)
         return Response(status_code=204)

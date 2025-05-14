@@ -14,7 +14,6 @@ class CommentSrv:
     def get_all_by_blog(self, blog_id: int):
         return self.db.query(models.Comments).filter(models.Comments.blogs_id == blog_id).all()
 
-
     def get_by_id(self, comment_id: int):
         comment = self.db.query(models.Comments).filter(models.Comments.id == comment_id).first()
         if comment is None:
@@ -39,7 +38,12 @@ class CommentSrv:
         self.db.commit()
         return comment
 
-
+    def get_comment(self, blog_id: int, comment_id: int):
+        comment = self.db.query(models.Comments).filter(models.Comments.blogs_id == blog_id).filter(
+            models.Comments.id == comment_id).first()
+        if comment is None:
+            raise BlogAppNotFoundError()
+        return comment
 
 
 def init_comment_service(db: Session = Depends(init_db)):
